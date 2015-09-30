@@ -2,6 +2,7 @@
 ### Andrew and Alathea
 #### 29 de setembro de 2015
 ## that was awesome
+## i learned a lot
 
 ###Code/Insert section -- organizando o script em sessões
 
