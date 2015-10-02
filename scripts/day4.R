@@ -13,6 +13,7 @@ install.packages("tidyr")
 
 library(dplyr)
 library(tidyr)
+install.packages("car")
 
 
 # import data -------------------------------------------------------------
