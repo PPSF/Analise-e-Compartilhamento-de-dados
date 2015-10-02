@@ -13,6 +13,8 @@ head(gapminder)
 library(dplyr)
 library(ggplot2)
 library(car)
+library (vegan)
+install.packages("AICcmodavg")
 
 # probability distributions -----------------------------------------------
 
@@ -92,3 +94,51 @@ summary(model6)
 model7 <- glm(pop~year, data=gapminder, family=quasipoisson)
 plot(model7)
 summary(model7)
+
+
+
+# Multivariate analyses ---------------------------------------------------
+
+data("varechem")
+data("varespec")
+data("dune")
+data("dune.env")
+View(dune)
+
+dist1 <- vegdist(varespec, method = "bray")
+dist1
+dist1 <- vegdist(varespec, method = "bray", diag=TRUE)
+dist1
+
+pca1 <- rda(varechem)
+plot(pca1)
+
+pca1 <- rda(varechem, scale=TRUE)
+plot(pca1)
+ordiplot(pca1) ##editar gráficos de ordenação
+
+rda1 <- rda(decostand(varespec, method="hellinger")~+K+pH+P, data=varechem)
+plot(rda1)
+
+RsquareAdj(rda1)
+
+cca1 <- cca(decostand(varespec, method="hellinger")~+K+pH+P, data=varechem)
+plot(cca1)
+
+#mds
+dist1
+dist2 <- vegdist(varechem, method="euclid")
+mds1 <- cmdscale(dist2)
+mds1
+plot(mds1)
+
+##permanova + permdist
+perm1 <- adonis(dune~Management, data=dune.env, method="bray") #for permanova
+perm1
+
+dist3 <- vegdist(dune, method="bray")
+disper3 <- betadisper(d=dist3,group=dune.env$Management)
+disper3
+permutest(disper3, pairwise=TRUE)
+plot(disper3)
+boxplot(disper3)
